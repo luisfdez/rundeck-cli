@@ -90,14 +90,15 @@ ospackage {
 
     //symlink /usr/bin/rd to the rd script
     link("/usr/bin/${applicationName}", "${distInstallPath}/${archivedir}/bin/${applicationName}")
+    //signature
 }
 
 //depend on the shadow artifact
 buildDeb.dependsOn distShadowZip
 buildRpm.dependsOn distShadowZip
-
 assemble.dependsOn buildRpm, buildDeb
 
+apply from: 'gradle/signing.gradle'
 apply from: 'gradle/bintray.gradle'
 
 task wrapper(type: Wrapper) {
